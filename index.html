@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>绿色贸易与低碳学习导航 · 国内资源版</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f0f4f8;
+    color: #1a202c;
+    line-height: 1.6;
+  }
+  .container { max-width: 1320px; margin: 0 auto; padding: 24px; }
+
+  /* 头部 */
+  .header {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2d6a4f 100%);
+    color: white;
+    padding: 36px 40px;
+    border-radius: 16px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -10%;
+    width: 400px; height: 400px;
+    background: rgba(72, 187, 120, 0.15);
+    border-radius: 50%;
+  }
+  .header h1 { font-size: 26px; margin-bottom: 8px; position: relative; }
+  .header .subtitle { font-size: 14px; opacity: 0.85; position: relative; }
+  .header .stats {
+    display: flex;
+    gap: 28px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  .stat-item { text-align: center; background: rgba(255,255,255,0.1); padding: 10px 18px; border-radius: 10px; }
+  .stat-item .num { font-size: 24px; font-weight: 700; }
+  .stat-item .label { font-size: 12px; opacity: 0.85; }
+
+  /* 标签导航 */
+  .tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 20px;
+    background: white;
+    padding: 6px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    overflow-x: auto;
+  }
+  .tab-btn {
+    padding: 10px 18px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: #64748b;
+    border-radius: 8px;
+    transition: all 0.2s;
+    white-space: nowrap;
+    flex: 1;
+    min-width: 100px;
+  }
+  .tab-btn:hover { background: #f1f5f9; }
+  .tab-btn.active {
+    background: linear-gradient(135deg, #1e3a5f, #2d6a4f);
+    color: white;
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* 阶段 */
+  .stage-section { margin-bottom: 28px; }
+  .stage-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .stage-badge {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+  }
+  .stage1 .stage-badge { background: #48bb78; }
+  .stage2 .stage-badge { background: #4299e1; }
+  .stage3 .stage-badge { background: #ed8936; }
+  .stage-title { font-size: 16px; font-weight: 600; }
+  .stage-desc { font-size: 12px; color: #64748b; margin-left: auto; }
+
+  .week-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 14px;
+  }
+  .week-card {
+    background: white;
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    border-top: 4px solid #cbd5e0;
+    transition: all 0.2s;
+  }
+  .week-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+  .stage1 .week-card { border-top-color: #48bb78; }
+  .stage2 .week-card { border-top-color: #4299e1; }
+  .stage3 .week-card { border-top-color: #ed8936; }
+
+  .week-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .week-num { font-size: 14px; font-weight: 700; color: #1e3a5f; }
+  .week-date { font-size: 11px; color: #94a3b8; background: #f1f5f9; padding: 3px 10px; border-radius: 12px; }
+  .week-theme { font-size: 13px; font-weight: 600; margin-bottom: 10px; color: #2d3748; }
+  .week-hours { font-size: 12px; color: #64748b; margin-bottom: 10px; }
+
+  .material-block { margin-bottom: 10px; }
+  .material-label {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+  .material-label.hard { background: #fff5f5; color: #c53030; }
+  .material-label.easy { background: #ebf8ff; color: #2b6cb0; }
+  .material-label .icon { font-size: 13px; }
+
+  .material-list { list-style: none; }
+  .material-list li {
+    font-size: 12px;
+    padding: 5px 0;
+    border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .material-list li:last-child { border-bottom: none; }
+  .material-list a {
+    color: #2b6cb0;
+    text-decoration: none;
+    flex: 1;
+    line-height: 1.4;
+  }
+  .material-list a:hover { text-decoration: underline; }
+  .material-list .tag {
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: #edf2f7;
+    color: #4a5568;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .material-list .tag.core { background: #fff5f5; color: #c53030; }
+  .material-list .tag.pdf { background: #f0fff4; color: #276749; }
+  .material-list .tag.video { background: #ebf8ff; color: #2b6cb0; }
+  .material-list .tag.course { background: #faf5ff; color: #6b46c1; }
+  .material-list .tag.article { background: #fffbeb; color: #92400e; }
+
+  /* 资源库 */
+  .resource-categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .resource-cat {
+    background: white;
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .resource-cat h3 {
+    font-size: 14px;
+    margin-bottom: 12px;
+    color: #1e3a5f;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .resource-cat h3 .count {
+    font-size: 11px;
+    font-weight: normal;
+    background: #e2e8f0;
+    color: #4a5568;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .resource-cat ul { list-style: none; }
+  .resource-cat li {
+    padding: 5px 0;
+    border-bottom: 1px solid #f7fafc;
+    font-size: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .resource-cat li:last-child { border-bottom: none; }
+  .resource-cat a { color: #2b6cb0; text-decoration: none; flex: 1; }
+  .resource-cat a:hover { text-decoration: underline; }
+  .resource-cat .std-no {
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 11px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* 知识框架 */
+  .framework {
+    background: white;
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    margin-bottom: 20px;
+  }
+  .framework h2 {
+    font-size: 17px;
+    margin-bottom: 20px;
+    color: #1e3a5f;
+    text-align: center;
+  }
+  .framework-layer { margin-bottom: 18px; }
+  .layer-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+  }
+  .layer-1 .layer-title { background: linear-gradient(90deg, #48bb78, #68d391); }
+  .layer-2 .layer-title { background: linear-gradient(90deg, #4299e1, #63b3ed); }
+  .layer-3 .layer-title { background: linear-gradient(90deg, #ed8936, #f6ad55); }
+  .layer-4 .layer-title { background: linear-gradient(90deg, #9f7aea, #b794f4); }
+
+  .layer-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding-left: 6px;
+  }
+  .layer-item {
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+  }
+  .layer-item.core {
+    background: #fff5f5;
+    border-color: #feb2b2;
+    font-weight: 600;
+  }
+
+  /* 获取指南 */
+  .guide-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+  }
+  .guide-card {
+    background: white;
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .guide-card h4 { font-size: 13px; margin-bottom: 6px; color: #1e3a5f; }
+  .guide-card .source { font-size: 12px; color: #2b6cb0; margin-bottom: 6px; word-break: break-all; }
+  .guide-card .source a { color: #2b6cb0; text-decoration: none; }
+  .guide-card .free-tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: #c6f6d5;
+    color: #22543d;
+    margin-bottom: 8px;
+  }
+  .guide-card .free-tag.paid { background: #fed7d7; color: #742a2a; }
+  .guide-card p { font-size: 12px; color: #64748b; line-height: 1.5; }
+
+  .note {
+    background: #fffbeb;
+    border-left: 4px solid #f59e0b;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #78350f;
+    margin-bottom: 18px;
+  }
+  .tip-green {
+    background: #f0fff4;
+    border-left: 4px solid #48bb78;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #22543d;
+    margin-bottom: 18px;
+  }
+
+  /* 慕课课程推荐区 */
+  .bili-section {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    margin-bottom: 20px;
+  }
+  .bili-section h2 {
+    font-size: 17px;
+    margin-bottom: 16px;
+    color: #1e3a5f;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .bili-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+  }
+  .bili-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 14px;
+    transition: all 0.2s;
+  }
+  .bili-card:hover {
+    border-color: #fc8181;
+    box-shadow: 0 4px 12px rgba(252, 129, 129, 0.15);
+  }
+  .bili-card .platform {
+    font-size: 10px;
+    color: #fc8181;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .bili-card .title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .bili-card .desc {
+    font-size: 11px;
+    color: #718096;
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+  .bili-card .tags { display: flex; gap: 4px; flex-wrap: wrap; }
+  .bili-card .tag {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: #fed7d7;
+    color: #742a2a;
+  }
+
+  /* 专业书籍卡片 */
+  .book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+  }
+  .book-card {
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 16px;
+    transition: all 0.2s;
+  }
+  .book-card:hover {
+    border-color: #4299e1;
+    box-shadow: 0 4px 12px rgba(66, 153, 225, 0.1);
+    background: #fff;
+  }
+  .book-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .book-author {
+    font-size: 12px;
+    color: #4a5568;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed #e2e8f0;
+  }
+  .book-author a { color: #2b6cb0; text-decoration: none; }
+  .book-author a:hover { text-decoration: underline; }
+  .book-desc {
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 头部 -->
+  <div class="header">
+    <h1>🌱 绿色贸易与低碳学习导航</h1>
+    <div class="stats">
+      <div class="stat-item"><div class="num">9周</div><div class="label">学习周期</div></div>
+      <div class="stat-item"><div class="num">60+</div><div class="label">标准法规</div></div>
+      <div class="stat-item"><div class="num">30+</div><div class="label">视频课程</div></div>
+      <div class="stat-item"><div class="num">55h</div><div class="label">总学时</div></div>
+    </div>
+  </div>
+
+  <div class="tip-green">
+    ✅ <strong>9周版！</strong>第二阶段标准精读4周（ISO中英文PDF+国标版），第三阶段法规合规3周（含ESPR+电池法规+ErP+CSRD中文解读+原文链接）。慕课课程全部免费，上传的ISO标准PDF均可直接下载。
+  </div>
+
+  <!-- 标签导航 -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('weekly', this)">📅 周计划</button>
+    <button class="tab-btn" onclick="switchTab('mooc', this)">🎓 公开课/慕课</button>
+    <button class="tab-btn" onclick="switchTab('pdf', this)">📄 标准PDF下载</button>
+    <button class="tab-btn" onclick="switchTab('books', this)">📚 专业书籍</button>
+    <button class="tab-btn" onclick="switchTab('official', this)">🏛️ 权威解读</button>
+    <button class="tab-btn" onclick="switchTab('framework', this)">🧩 知识框架</button>
+    <button class="tab-btn" onclick="switchTab('guide', this)">🔗 获取指南</button>
+  </div>
+
+  <!-- 周学习计划 -->
+  <div id="tab-weekly" class="tab-content active">
+
+    <!-- 第一阶段 -->
+    <div class="stage-section stage1">
+      <div class="stage-header">
+        <span class="stage-badge">第一阶段</span>
+        <span class="stage-title">基础入门 · 建立认知框架</span>
+        <span class="stage-desc">第1-2周 · 10.8-10.19 · 约10小时</span>
+      </div>
+      <div class="week-grid">
+
+        <!-- 第1周 -->
+        <div class="week-card">
+          <div class="week-head">
+            <span class="week-num">第1周</span>
+            <span class="week-date">10.8-10.12</span>
+          </div>
+          <div class="week-theme">低碳基础概念 + 全球气候治理</div>
+          <div class="week-hours">⏱ 预计5小时</div>
+
+          <div class="material-block">
+            <div class="material-label easy"><span class="icon">📄</span> 官方解读（轻松入门）</div>
+            <ul class="material-list">
+              <li><a href="https://www.mee.gov.cn/ywgz/ydqhbh/ydqhzs/202312/t20231218_1056742.shtml" target="_blank">生态环境部：双碳政策解读系列（官方权威）</a><span class="tag article">官方解读</span></li>
+              <li><a href="https://chinawto.mofcom.gov.cn/article/jsbl/zszc/202310/20231003461435.shtml" target="_blank">商务部：欧盟碳边境调节机制（CBAM）综述</a><span class="tag article">官方解读</span></li>
+              <li>推荐配合「🎓 公开课/慕课」标签下的系统课程学习（西北大学碳资产管理慕课）<span class="tag course">慕课·免费</span></li>
+            </ul>
+          </div>
+
+          <div class="material-block">
+            <div class="material-label hard"><span class="icon">📄</span> 核心文件（国内可下载）</div>
+            <ul class="material-list">
+              <li><a href="https://www.ipcc.ch/report/ar6/wg1/downloads/report/IPCC_AR6_WG1_SPM_Chinese.pdf" target="_blank">IPCC AR6决策者摘要（中文PDF）</a><span class="tag pdf">必读</span></li>
+              <li><a href="https://treaty.mfa.gov.cn/tykfiles/20180831/1535707567794.pdf" target="_blank">《巴黎协定》中文本（外交部条约库PDF）</a><span class="tag pdf core">官方中文</span></li>
+              <li><a href="https://treaty.mfa.gov.cn/web/detail1.jsp?objid=1535341598808" target="_blank">《巴黎协定》外交部条约库详情页</a><span class="tag article">国内官方</span></li>
+              <li><a href="http://wms.mofcom.gov.cn/cms_files/filemanager/271034535/attach/202511/a141613b8cf8439eb41ba1430a4a94c4.pdf?fileName=%E6%AC%A7%E7%9B%9FCBAM%E7%9F%A5%E8%AF%86%E9%97%AE%E7%AD%94%EF%BC%88%E7%AC%AC%E4%B8%80%E6%9C%9F%EF%BC%89.pdf" target="_blank">商务部CBAM知识问答PDF（国内下载）</a><span class="tag pdf">国内官方</span></li>
+              <li><a href="https://www.mee.gov.cn/ywgz/ydqhbh/" target="_blank">生态环境部应对气候变化专栏</a><span class="tag article">政策</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 第2周 -->
+        <div class="week-card">
+          <div class="week-head">
+            <span class="week-num">第2周</span>
+            <span class="week-date">10.13-10.19</span>
+          </div>
+          <div class="week-theme">中国双碳政策 + 绿色贸易背景</div>
+          <div class="week-hours">⏱ 预计5小时</div>
+
+          <div class="material-block">
+            <div class="material-label easy"><span class="icon">🎓</span> 系统课程 + 官方解读</div>
+            <ul class="material-list">
+              <li><a href="https://www.icourse163.org/course/NWU-1485329164" target="_blank">《碳资产管理与核算》西北大学（中国大学MOOC）</a><span class="tag course">慕课·免费</span></li>
+              <li><a href="https://chinawto.mofcom.gov.cn/article/jsbl/zszc/202310/20231003461435.shtml" target="_blank">商务部：欧盟CBAM综述（权威解读）</a><span class="tag article">官方解读</span></li>
+              <li><a href="http://www.gov.cn/zhengce/2021-10/24/content_5644613.htm" target="_blank">双碳工作意见（顶层设计文件）</a><span class="tag core">核心政策</span></li>
+            </ul>
+          </div>
+
+          <div class="material-block">
+            <div class="material-label hard"><span class="icon">📄</span> 核心政策文件</div>
+            <ul class="material-list">
+              <li><a href="http://www.gov.cn/zhengce/2021-10/24/content_5644613.htm" target="_blank">双碳工作意见（顶层设计）</a><span class="tag core">核心</span></li>
+              <li><a href="http://www.gov.cn/zhengce/content/2021-10/26/content_5644984.htm" target="_blank">2030年前碳达峰行动方案</a><span class="tag core">核心</span></li>
+              <li><a href="https://www.mee.gov.cn/xxgk2018/xxgk/xxgk01/202101/t20210129_819733.html" target="_blank">碳排放权交易管理办法</a><span class="tag article">重要</span></li>
+              <li><a href="https://chinawto.mofcom.gov.cn/article/jsbl/dtxx/202608/20260803640319.shtml" target="_blank">商务部：CBAM正式期实施指南解读</a><span class="tag article">官方解读</span></li>
+              <li>欣旺达/嘉隆科技ESG报告（内部文件）<span class="tag article">企业案例</span></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 第二阶段：标准精读（4周） -->
+    <div class="stage-section stage2">
+      <div class="stage-header">
+        <span class="stage-badge">第二阶段</span>
+        <span class="stage-title">标准精读 · ISO碳标准国标版</span>
+        <span class="stage-desc">第3-6周 · 10.20-11.16 · 约26小时</span>
+      </div>
+      <div class="week-grid">
+
+        <!-- 第3周 -->
+        <div class="week-card">
+          <div class="week-head">
+            <span class="week-num">第3周</span>
+            <span class="week-date">10.20-10.26</span>
+          </div>
+          <div class="week-theme">ISO 14064-1 · 组织碳核算</div>
+          <div class="week-hours">⏱ 预计6小时</div>
+
+          <div class="material-block">
+            <div class="material-label easy"><span class="icon">🎓</span> 慕课 + 官方解读</div>
+            <ul class="material-list">
+              <li><a href="https://www.icourse163.org/course/NWU-1485329164" target="_blank">《碳资产管理与核算》西北大学（MOOC·含碳核查模块）</a><span class="tag course">慕课·免费</span></li>
+              <li><a href="https://www.mee.gov.cn/xxgk2018/xxgk/xxgk01/202101/t20210129_819733.html" target="_blank">生态环境部：碳排放权交易管理办法</a><span class="tag article">官方</span></li>
+            </ul>
+          </div>
+
+          <div class="material-block">
+            <div class="material-label hard"><span class="icon">📄</span> ISO 14064-1标准（国内中文版）</div>
+            <ul class="material-list">
+              <li><a href="http://www.wang-xu.cn/static/upload/file/20230912/1694483140170693.pdf" target="_blank">ISO 14064-1:2018 组织碳核算（中文版PDF·国内下载）</a><span class="tag pdf core">⭐核心·中文</span></li>
+              <li><a href="https://openstd.samr.gov.cn/bzgk/std/std_list?p.p1=0&p.p2=GB%2FT%2032150" target="_blank">→ GB/T 32150-2025 工业企业核算通则（国标·对应ISO 14064-1）</a><span class="tag pdf">国标</span></li>
+              <li>GB/T 46907-2025 数据质量管理（采标国标·仅检索）<span class="tag pdf">国标</span></li>
+              <li><a href="https://ghgprotocol.org/sites/default/files/ghgp/standards/Chinese_small.pdf" target="_blank">GHG Protocol企业标准（中文版PDF）</a><span class="tag pdf">国际参考</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 第4周 -->
+        <div class="week-card">
+          <div class="week-head">
+            <span class="week-num">第4周</span>
+            <span class="week-date">10.27-11.2</span>
+          </div>
+          <div class="week-theme">ISO 14064-2 + 14064-3 · 项目减排与核查</div>
+          <div class="week-hours">⏱ 预计6小时</div>
+
+          <div class="material-block">
+            <div class="material-label easy"><span class="icon">🎓</span> 慕课 + 官方解读</div>
+            <ul class="material-list">
+              <li><a href="https://www.icourse163.org/course/NWU-1485329164" target="_blank">《碳资产管理与核算》西北大学（MOOC·含碳交易/CCER模块）</a><span class="tag course">慕课·免费</span></li>
+              <li><a href="https://www.mee.gov.cn/xxgk2018/xxgk/xxgk01/202101/t20210129_819733.html" target="_blank">生态环境部：碳排放权交易管理办法</a><span class="tag article">官方</span></li>
+            </ul>
+          </div>
+
+          <div class="material-block">
+            <div class="material-label hard"><span class="icon">📄</span> ISO 14064-2标准 + 核查标准（国内中文版）</div>
+            <ul class="material-list">
+              <li>ISO 14064-2:2019 项目碳减排（中文版·仅检索）<span class="tag pdf">仅检索</span></li>
+              <li>GB/T 47443-2026 温室气体核查标准（采标国标·仅检索）<span class="tag pdf">国标</span></li>
+              <li><a href="https://openstd.samr.gov.cn/bzgk/std/std_list?p.p1=0&p.p2=GB%2FT%2032151" target="_blank">→ GB/T 32151系列 分行业核算要求</a><span class="tag pdf">国标</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 第5周 -->
+        <div class="week-card">
+          <div class="week-head">
+            <span class="week-num">第5周</span>
+            <span class="week-date">11.3-11.9</span>
+          </div>
+          <div class="week-theme">ISO 14040/44 · LCA生命周期评价</div>
+          <div class="week-hours">⏱ 预计7小时</div>
+
+          <div class="material-block">
+            <div class="material-label easy"><span class="icon">🎓</span> 慕课（LCA/碳足迹）</div>
+            <ul class="material-list">
+              <li><a href="https://www.icourse163.org/course/SCU-1462177170" target="_blank">《生命周期评价与应用》四川大学（中国大学MOOC）</a><span class="tag course">慕课·免费</span></li>
+              <li><a href="https://www.icourse163.org/course/BNU-1002772007" target="_blank">《产业生态学》（含LCA模块）北京师范大学（中国大学MOOC）</a><span class="tag course">慕课·免费</span></li>
+              <li><a href="https://www.icourse163.org/course/BIT-1471756163" target="_blank">《能源与碳中和系统工程》北京理工大学（含碳足迹核算）</a><span class="tag course">慕课·免费</span></li>
+            </ul>
+          </div>
+
+          <div class="material-block">
+            <div class="material-label hard"><span class="icon">📄</span> ISO 14040/44标准（国内中文版PDF）</div>
+            <ul class="material-list">
+              <li><a href="https://std.samr.gov.cn/gb/search/gbDetailed?id=71F772D7FF37D3A7E05397BE0A0AB82A" target="_blank">GB/T 24040-2008 LCA原则与框架（国标全文公开系统·在线阅读）</a><span class="tag pdf core">⭐核心·中文</span></li>
+              <li><a href="https://std.samr.gov.cn/gb/search/gbDetailedCNF?id=71F772D772D3D3A7E05397BE0A0AB82A" target="_blank">GB/T 24044-2008 LCA要求与指南（国标全文公开系统·在线阅读）</a><span class="tag pdf core">⭐核心·中文</span></li>
+              <li>ISO/TS 14064-4:2025 应用指南（国际标准·仅检索）<span class="tag pdf">仅检索</span></li>
+              <li><a href="https://file.51315.org.cn/site/10203/upload/bszn/upload/20251016/6389622796301278631289837.pdf" target="_blank">→ GB/T 24067-2024 产品碳足迹（对应ISO 14067，PDF下载）</a><span class="tag pdf core">⭐最核心国标</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 第6周 -->
+        <div class="week-card">
+          <div class="week-head">
+            <span class="week-num">第6周</span>
+            <span class="week-date">11.10-11.16</span>
+          </div>
+          <div class="week-theme">管理体系标准 · ISO 14001/50001/46566</div>
+          <div class="week-hours">⏱ 预计7小时</div>
+
+          <div class="material-block">
+            <div class="material-label easy"><span class="icon">🎓</span> 慕课 + 官方解读</div>
+            <ul class="material-list">
+              <li><a href="https://www.icourse163.org/course/BIT-1471756163" target="_blank">《能源与碳中和系统工程》北京理工大学（含能源管理）</a><span class="tag course">慕课·免费</span></li>
+              <li><a href="https://www.miit.gov.cn/jgsj/jns/nyjy/art/2026/art_57a256c21af648b08c2b7df1f093c6ae.html" target="_blank">工信部专家解读：零碳工厂与碳中和标准</a><span class="tag article">国内官方解读</span></li>
+            </ul>
+          </div>
+
+          <div class="material-block">
+            <div class="material-label hard"><span class="icon">📄</span> 管理体系标准（国标版）</div>
+            <ul class="material-list">
+              <li><a href="http://www.sinmrrz.com/file/20260624/1782295424680638.pdf" target="_blank">GB/T 46566-2025 温室气体管理体系（PDF下载）</a><span class="tag pdf core">⭐最核心</span></li>
+              <li>GB/T 24001-2016 环境管理体系（采标国标·仅检索）<span class="tag pdf">国标</span></li>
+              <li>GB/T 23331-2020 能源管理体系（采标国标·仅检索）<span class="tag pdf">国标</span></li>
+              <li><a href="https://www.miit.gov.cn/jgsj/jns/nyjy/art/2026/art_57a256c21af648b08c2b7df1f093c6ae.html" target="_blank">ISO 14068-1 → 工信部专家解读：零碳工厂与碳中和标准</a><span class="tag article">国内官方解读</span></li>
+              <li>碳排放管理体系认证辅导报告（内部文件）<span class="tag article">企业案例</span></li>
+              <li>碳中和认证辅导建议报告（内部文件）<span class="tag article">企业案例</span></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 第三阶段：法规合规（3周） -->
+    <div class="stage-section stage3">
+      <div class="stage-header">
+        <span class="stage-badge">第三阶段</span>
+        <span class="stage-title">法规合规 · 欧盟法规与ESG披露</span>
+        <span class="stage-desc">第7-9周 · 11.17-12.7 · 约20小时</span>
+      </div>
+      <div class="week-grid">
+
+        <!-- 第7周 -->
+        <div class="week-card">
+          <div class="week-head">
+            <span class="week-num">第7周</span>
+            <span class="week-date">11.17-11.23</span>
+          </div>
+          <div class="week-theme">欧盟电池法规 + CBAM</div>
+          <div class="week-hours">⏱ 预计7小时</div>
+
+          <div class="material-block">
+            <div class="material-label easy"><span class="icon">📄</span> 官方解读（中文·轻松入门）</div>
+            <ul class="material-list">
+              <li><a href="http://chinawto.mofcom.gov.cn/article/jsbl/zszc/202309/20230903438665.shtml" target="_blank">商务部：欧盟新电池法影响和应对</a><span class="tag article">中文解读</span></li>
+              <li><a href="http://chinawto.mofcom.gov.cn/article/jsbl/zszc/202408/20240803530378.shtml" target="_blank">商务部：欧盟新电池法规详细内容及应对策略</a><span class="tag article">中文解读</span></li>
+              <li><a href="https://chinawto.mofcom.gov.cn/article/jsbl/zszc/202310/20231003461435.shtml" target="_blank">商务部：CBAM碳边境调节机制综述</a><span class="tag article">中文解读</span></li>
+            </ul>
+          </div>
+
+          <div class="material-block">
+            <div class="material-label hard"><span class="icon">📄</span> 电池法规 + CBAM（中文解读+原文）</div>
+            <ul class="material-list">
+              <li><a href="http://wms.mofcom.gov.cn/cms_files/filemanager/271034535/attach/202511/a141613b8cf8439eb41ba1430a4a94c4.pdf?fileName=%E6%AC%A7%E7%9B%9FCBAM%E7%9F%A5%E8%AF%86%E9%97%AE%E7%AD%94%EF%BC%88%E7%AC%AC%E4%B8%80%E6%9C%9F%EF%BC%89.pdf" target="_blank">商务部：CBAM知识问答PDF（国内下载）</a><span class="tag pdf core">国内官方</span></li>
+              <li><a href="https://chinawto.mofcom.gov.cn/article/jsbl/dtxx/202608/20260803640319.shtml" target="_blank">商务部：CBAM正式期实施指南解读</a><span class="tag article">中文解读</span></li>
+              <li><a href="http://chinawto.mofcom.gov.cn/article/jsbl/zszc/202309/20230903438665.shtml" target="_blank">商务部：欧盟新电池法（2023/1542）影响和应对</a><span class="tag article">中文解读</span></li>
+              <li><a href="http://chinawto.mofcom.gov.cn/article/jsbl/zszc/202408/20240803530378.shtml" target="_blank">欧盟新电池法规详细内容及应对策略</a><span class="tag article">中文解读</span></li>
+              <li><a href="https://eur-lex.europa.eu/eli/reg/2023/1542/oj" target="_blank">EU 2023/1542 电池法规原文（EUR-Lex英文全文）</a><span class="tag pdf">欧盟原文</span></li>
+              <li><a href="http://chinawto.mofcom.gov.cn/article/jsbl/zszc/202508/20250803595202.shtml" target="_blank">欧盟新电池法全面取代电池指令（深度解读）</a><span class="tag article">中文解读</span></li>
+              <li><a href="https://www.mee.gov.cn/xxgk2018/xxgk/xxgk01/202101/t20210129_819733.html" target="_blank">碳排放权交易管理办法（生态环境部）</a><span class="tag article">重要</span></li>
+              <li>产品碳足迹分析建议报告（内部文件）<span class="tag article">企业案例</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 第8周 -->
+        <div class="week-card">
+          <div class="week-head">
+            <span class="week-num">第8周</span>
+            <span class="week-date">11.24-11.30</span>
+          </div>
+          <div class="week-theme">ESPR + ErP指令 + CSRD</div>
+          <div class="week-hours">⏱ 预计7小时</div>
+
+          <div class="material-block">
+            <div class="material-label easy"><span class="icon">🎓</span> 慕课 + 官方解读</div>
+            <ul class="material-list">
+              <li><a href="https://www.icourse163.org/course/CUEB-1473162182" target="_blank">《企业ESG管理》首都经济贸易大学（中国大学MOOC）</a><span class="tag course">慕课·免费</span></li>
+              <li><a href="https://chinawto.mofcom.gov.cn/article/jsbl/zszc/202603/20260303623184.shtml" target="_blank">商务部：一文读懂ESPR和数字产品护照(DPP)</a><span class="tag article">中文解读·必读</span></li>
+            </ul>
+          </div>
+
+          <div class="material-block">
+            <div class="material-label hard"><span class="icon">📄</span> ESPR + ErP + CSRD（中文解读+原文）</div>
+            <ul class="material-list">
+              <li><a href="https://chinawto.mofcom.gov.cn/article/jsbl/zszc/202603/20260303623184.shtml" target="_blank">商务部：一文读懂ESPR和数字产品护照(DPP)</a><span class="tag article core">中文解读·必读</span></li>
+              <li><a href="https://chinawto.mofcom.gov.cn/article/jsbl/zszc/202509/20250903600686.shtml" target="_blank">商务部：ESPR深度解读—管控范围近乎覆盖全品类</a><span class="tag article">中文解读</span></li>
+              <li><a href="https://chinawto.mofcom.gov.cn/article/jsbl/zcfg/202603/20260303620473.shtml" target="_blank">商务部：ESPR产品禁毁豁免授权法规</a><span class="tag article">中文解读</span></li>
+              <li><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:02024R1781-20240628" target="_blank">ESPR EU 2024/1781 原文（EUR-Lex英文全文）</a><span class="tag pdf">欧盟原文</span></li>
+              <li><a href="http://www.mofcom.gov.cn/ckzn/upload/erp2024.pdf" target="_blank">商务部：ErP生态设计指令中文指南（PDF下载）</a><span class="tag pdf core">国内官方</span></li>
+              <li><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32009L0125" target="_blank">ErP指令 2009/125/EC 原文（EUR-Lex英文全文，已被ESPR取代）</a><span class="tag pdf">欧盟原文</span></li>
+              <li><a href="http://chinawto.mofcom.gov.cn/article/jsbl/zszc/202505/20250503581344.shtml" target="_blank">欧盟能效ErP指令新规解读</a><span class="tag article">中文解读</span></li>
+              <li><a href="http://chinawto.mofcom.gov.cn/article/jsbl/zcfg/202603/20260303621855.shtml" target="_blank">欧盟CSRD新规生效（中文解读）</a><span class="tag article">中文解读</span></li>
+              <li><a href="http://chinawto.mofcom.gov.cn/article/jsbl/zszc/202408/20240803533167.shtml" target="_blank">欧盟生态设计法规下对胶粘剂和密封剂关键影响</a><span class="tag article">行业解读</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 第9周 -->
+        <div class="week-card">
+          <div class="week-head">
+            <span class="week-num">第9周</span>
+            <span class="week-date">12.1-12.7</span>
+          </div>
+          <div class="week-theme">ESG披露 + 绿色供应链 + 总结回顾</div>
+          <div class="week-hours">⏱ 预计6小时</div>
+
+          <div class="material-block">
+            <div class="material-label easy"><span class="icon">🎓</span> 慕课 + 官方解读</div>
+            <ul class="material-list">
+              <li><a href="https://www.icourse163.org/course/CUEB-1473586161" target="_blank">《ESG理论与实践》首都经济贸易大学（中国大学MOOC）</a><span class="tag course">慕课·免费</span></li>
+              <li><a href="https://www.xuetangx.com/course/THU08251001616" target="_blank">《绿色创新理论与实践》清华大学（学堂在线）</a><span class="tag course">慕课·免费</span></li>
+              <li><a href="https://www.casc.org.cn/2023/0628/243203.shtml" target="_blank">IFRS S1 可持续披露准则（财政部会计准则委员会解读）</a><span class="tag article">国内解读</span></li>
+            </ul>
+          </div>
+
+          <div class="material-block">
+            <div class="material-label hard"><span class="icon">📄</span> ESG披露标准 + 绿色供应链</div>
+            <ul class="material-list">
+              <li><a href="https://www.casc.org.cn/2023/0628/243203.shtml" target="_blank">IFRS S1 可持续披露准则（财政部会计准则委员会中文解读）</a><span class="tag article">国内解读</span></li>
+              <li><a href="https://www.ifrs.org/content/dam/ifrs/supporting-implementation/ifrs-s2/s2-launch-webcast-slides-cn.pdf" target="_blank">IFRS S2 气候相关披露（中文介绍PDF）</a><span class="tag pdf core">核心</span></li>
+              <li><a href="https://assets.bbhub.io/company/sites/60/2021/12/Implementing-the-Recommendations-of-the-Task-Force-on-Climate-related-Financial-Disclosures-TCFD-Annex-2017-Simplified-Chinese-Translation.pdf" target="_blank">TCFD气候披露建议（中文版PDF）</a><span class="tag pdf">重要</span></li>
+              <li><a href="https://www.globalreporting.org/how-to-use-the-gri-standards/gri-standards-simplified-chinese-translations/" target="_blank">GRI可持续发展报告标准（简体中文版下载）</a><span class="tag pdf">中文版</span></li>
+              <li><a href="https://openstd.samr.gov.cn/bzgk/std/std_list?p.p1=0&p.p2=GB%2FT%2033635" target="_blank">GB/T 33635-2017 绿色供应链管理导则</a><span class="tag pdf">国标</span></li>
+              <li>广东省碳达峰实施方案（粤府〔2022〕56号）<span class="tag article">地方</span></li>
+              <li>深圳市碳达峰实施方案（深府〔2023〕84号）<span class="tag article">地方</span></li>
+              <li>ESG报告编制建议报告（内部文件）<span class="tag article">企业案例</span></li>
+              <li>碳达峰方案编制建议报告（内部文件）<span class="tag article">企业案例</span></li>
+            </ul>
+          </div>
+
+          <div class="material-block">
+            <div class="material-label hard"><span class="icon">⭐</span> TOP5核心标准回顾</div>
+            <ul class="material-list">
+              <li>GB/T 24067-2024 产品碳足迹（国内核心）<span class="tag core">⭐TOP1</span></li>
+              <li>GB/T 46566-2025 碳管理体系（认证依据）<span class="tag core">⭐TOP2</span></li>
+              <li>EU 2023/1542 欧盟电池法规（出口核心）<span class="tag core">⭐TOP3</span></li>
+              <li>ISO 14064-1 组织碳核算（国际通用）<span class="tag core">⭐TOP4</span></li>
+              <li>EU 2024/1781 ESPR可持续产品法规（新规）<span class="tag core">⭐TOP5</span></li>
+            </ul>
+          </div>
+
+          <div class="material-block">
+            <div class="material-label easy"><span class="icon">📝</span> 总结与规划</div>
+            <ul class="material-list">
+              <li>整理个人学习笔记和标准速查表</li>
+              <li>完成模拟案例：某产品碳足迹核算全流程</li>
+              <li>制定2026年深度学习计划（选择细分方向）</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 公开课/慕课 -->
+  <div id="tab-mooc" class="tab-content">
+    <div class="bili-section">
+      <h2>🎓 国内公开课/慕课推荐（系统学习）</h2>
+      <div class="bili-grid">
+
+        <div class="bili-card">
+          <div class="platform">🎓 中国大学MOOC · 西北大学</div>
+          <div class="title">碳资产管理与核算</div>
+          <div class="desc">全国首门碳资产管理慕课！覆盖碳资产概念、碳排放核算、减排碳资产开发、碳管理体系建设、碳金融等全模块。</div>
+          <div class="tags">
+            <span class="tag" style="background:#e9d8fd;color:#553c9a;">系统课</span>
+            <span class="tag" style="background:#e9d8fd;color:#553c9a;">西北大学</span>
+            <span class="tag" style="background:#c6f6d5;color:#22543d;">免费</span>
+          </div>
+          <div style="margin-top:10px;"><a href="https://www.icourse163.org/course/NWU-1485329164" target="_blank" style="font-size:12px;color:#6b46c1;">→ 去MOOC学习</a></div>
+        </div>
+
+        <div class="bili-card">
+          <div class="platform">🎓 中国大学MOOC · 河南理工大学</div>
+          <div class="title">双碳中国</div>
+          <div class="desc">立足双碳目标，以经济学为基础，讲解中国双碳战略的政策、理论与实践，通识选修课。</div>
+          <div class="tags">
+            <span class="tag" style="background:#e9d8fd;color:#553c9a;">通识课</span>
+            <span class="tag" style="background:#e9d8fd;color:#553c9a;">河南理工</span>
+            <span class="tag" style="background:#c6f6d5;color:#22543d;">免费</span>
+          </div>
+          <div style="margin-top:10px;"><a href="https://www.icourse163.org/spoc/course/HPU-1467959169" target="_blank" style="font-size:12px;color:#6b46c1;">→ 去MOOC学习</a></div>
+        </div>
+
+        <div class="bili-card">
+          <div class="platform">🎓 学堂在线 · 清华大学</div>
+          <div class="title">碳中和技术概论</div>
+          <div class="desc">清华大学碳中和研究院课程，涵盖全球气候变化背景、碳中和政策措施、各领域减碳技术。</div>
+          <div class="tags">
+            <span class="tag" style="background:#e9d8fd;color:#553c9a;">清华</span>
+            <span class="tag" style="background:#e9d8fd;color:#553c9a;">技术概论</span>
+            <span class="tag" style="background:#c6f6d5;color:#22543d;">免费</span>
+          </div>
+          <div style="margin-top:10px;"><a href="https://higher.smartedu.cn/course/6786f0a6225d72705e5dd2f5" target="_blank" style="font-size:12px;color:#6b46c1;">→ 去智慧教育平台</a></div>
+        </div>
+
+        <div class="bili-card">
+          <div class="platform">🎓 学堂在线 · 清华大学</div>
+          <div class="title">Carbon Neutrality: Why and How</div>
+          <div class="desc">清华大学英文课程，碳中和：为什么以及如何应对气候变化，国际视野。</div>
+          <div class="tags">
+            <span class="tag" style="background:#e9d8fd;color:#553c9a;">清华</span>
+            <span class="tag" style="background:#e9d8fd;color:#553c9a;">英文</span>
+            <span class="tag" style="background:#c6f6d5;color:#22543d;">免费</span>
+          </div>
+          <div style="margin-top:10px;"><a href="https://www.xuetangx.com/page/G2022/Gxxmk" target="_blank" style="font-size:12px;color:#6b46c1;">→ 去学堂在线</a></div>
+        </div>
+
+        <div class="bili-card">
+          <div class="platform">🎓 国家高等教育智慧教育平台</div>
+          <div class="title">绿色建筑与可持续发展</div>
+          <div class="desc">清华大学课程，含中国建筑节能与碳中和道路章节，了解建筑领域碳减排。</div>
+          <div class="tags">
+            <span class="tag" style="background:#e9d8fd;color:#553c9a;">清华</span>
+            <span class="tag" style="background:#e9d8fd;color:#553c9a;">绿色建筑</span>
+            <span class="tag" style="background:#c6f6d5;color:#22543d;">免费</span>
+          </div>
+          <div style="margin-top:10px;"><a href="https://www.xuetangx.com/course/THU08101000343" target="_blank" style="font-size:12px;color:#6b46c1;">→ 去学堂在线</a></div>
+        </div>
+
+        <div class="bili-card">
+          <div class="platform">🎓 中国大学MOOC · 四川大学</div>
+          <div class="title">生命周期评价与应用</div>
+          <div class="desc">系统讲授LCA方法学框架、清单分析、影响评价，配合ISO 14040/44标准学习效果最佳。</div>
+          <div class="tags">
+            <span class="tag" style="background:#e9d8fd;color:#553c9a;">LCA</span>
+            <span class="tag" style="background:#e9d8fd;color:#553c9a;">四川大学</span>
+            <span class="tag" style="background:#c6f6d5;color:#22543d;">免费</span>
+          </div>
+          <div style="margin-top:10px;"><a href="https://www.icourse163.org/course/SCU-1462177170" target="_blank" style="font-size:12px;color:#6b46c1;">→ 去MOOC学习</a></div>
+        </div>
+
+        <div class="bili-card">
+          <div class="platform">🎓 中国大学MOOC · 北京师范大学</div>
+          <div class="title">产业生态学</div>
+          <div class="desc">含LCA模块，从产业系统视角理解物质能量流动与环境影响，拓展碳足迹分析思路。</div>
+          <div class="tags">
+            <span class="tag" style="background:#e9d8fd;color:#553c9a;">产业生态</span>
+            <span class="tag" style="background:#e9d8fd;color:#553c9a;">北师大</span>
+            <span class="tag" style="background:#c6f6d5;color:#22543d;">免费</span>
+          </div>
+          <div style="margin-top:10px;"><a href="https://www.icourse163.org/course/BNU-1002772007" target="_blank" style="font-size:12px;color:#6b46c1;">→ 去MOOC学习</a></div>
+        </div>
+
+        <div class="bili-card">
+          <div class="platform">🎓 中国大学MOOC · 北京理工大学</div>
+          <div class="title">能源与碳中和系统工程</div>
+          <div class="desc">覆盖能源管理、碳足迹核算、碳中和系统路径，适合管理体系标准学习阶段的系统课程。</div>
+          <div class="tags">
+            <span class="tag" style="background:#e9d8fd;color:#553c9a;">能源管理</span>
+            <span class="tag" style="background:#e9d8fd;color:#553c9a;">北理工</span>
+            <span class="tag" style="background:#c6f6d5;color:#22543d;">免费</span>
+          </div>
+          <div style="margin-top:10px;"><a href="https://www.icourse163.org/course/BIT-1471756163" target="_blank" style="font-size:12px;color:#6b46c1;">→ 去MOOC学习</a></div>
+        </div>
+
+        <div class="bili-card">
+          <div class="platform">🎓 中国大学MOOC · 首都经济贸易大学</div>
+          <div class="title">企业ESG管理</div>
+          <div class="desc">系统讲解ESG框架、ESG报告编制、可持续披露准则，适合ESG披露阶段学习。</div>
+          <div class="tags">
+            <span class="tag" style="background:#e9d8fd;color:#553c9a;">ESG</span>
+            <span class="tag" style="background:#e9d8fd;color:#553c9a;">首经贸</span>
+            <span class="tag" style="background:#c6f6d5;color:#22543d;">免费</span>
+          </div>
+          <div style="margin-top:10px;"><a href="https://www.icourse163.org/course/CUEB-1473162182" target="_blank" style="font-size:12px;color:#6b46c1;">→ 去MOOC学习</a></div>
+        </div>
+
+        <div class="bili-card">
+          <div class="platform">🎓 中国大学MOOC · 首都经济贸易大学</div>
+          <div class="title">ESG理论与实践</div>
+          <div class="desc">ESG理论框架与实践案例结合，涵盖GRI、TCFD等披露标准，适合ESG报告编制入门。</div>
+          <div class="tags">
+            <span class="tag" style="background:#e9d8fd;color:#553c9a;">ESG实践</span>
+            <span class="tag" style="background:#e9d8fd;color:#553c9a;">首经贸</span>
+            <span class="tag" style="background:#c6f6d5;color:#22543d;">免费</span>
+          </div>
+          <div style="margin-top:10px;"><a href="https://www.icourse163.org/course/CUEB-1473586161" target="_blank" style="font-size:12px;color:#6b46c1;">→ 去MOOC学习</a></div>
+        </div>
+
+        <div class="bili-card">
+          <div class="platform">🎓 学堂在线 · 清华大学</div>
+          <div class="title">绿色创新理论与实践</div>
+          <div class="desc">绿色创新驱动力、绿色供应链管理、可持续转型路径，适合绿色供应链阶段学习。</div>
+          <div class="tags">
+            <span class="tag" style="background:#e9d8fd;color:#553c9a;">绿色创新</span>
+            <span class="tag" style="background:#e9d8fd;color:#553c9a;">清华</span>
+            <span class="tag" style="background:#c6f6d5;color:#22543d;">免费</span>
+          </div>
+          <div style="margin-top:10px;"><a href="https://www.xuetangx.com/course/THU08251001616" target="_blank" style="font-size:12px;color:#6b46c1;">→ 去学堂在线</a></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- 标准PDF下载 -->
+  <div id="tab-pdf" class="tab-content">
+    <div class="bili-section">
+      <h2>📄 核心标准PDF下载（国内可访问）</h2>
+      <p style="font-size:13px;color:#64748b;margin-bottom:16px;">
+        💡 <strong>国标获取技巧：</strong>优先去「国家标准全文公开系统」(openstd.samr.gov.cn)，强制性国标可下载PDF，推荐性国标可在线阅读。
+        采标的推荐性国标可以找对应的ISO原文或第三方PDF参考。以下是验证过可下载的核心标准：
+      </p>
+
+      <div class="resource-categories">
+        <div class="resource-cat">
+          <h3>🏭 国内碳核算标准 <span class="count">TOP优先级</span></h3>
+          <ul>
+            <li><span class="std-no">GB/T 24067-2024</span> <a href="https://file.51315.org.cn/site/10203/upload/bszn/upload/20251016/6389622796301278631289837.pdf" target="_blank">产品碳足迹 量化要求和指南（PDF）</a></li>
+            <li><span class="std-no">GB/T 46566-2025</span> <a href="http://www.sinmrrz.com/file/20260624/1782295424680638.pdf" target="_blank">温室气体管理体系 要求（PDF）</a></li>
+            <li><span class="std-no">GB/T 32150-2025</span> <a href="https://openstd.samr.gov.cn/bzgk/std/std_list?p.p1=0&p.p2=GB%2FT%2032150" target="_blank">工业企业核算通则（在线阅读）</a></li>
+            <li><span class="std-no">GB/T 32151系列</span> <a href="https://openstd.samr.gov.cn/bzgk/std/std_list?p.p1=0&p.p2=GB%2FT%2032151" target="_blank">分行业核算与报告要求</a></li>
+            <li><span class="std-no">GB/T 24040-2008</span> <a href="https://openstd.samr.gov.cn/bzgk/std/std_list?p.p1=0&p.p2=GB%2FT%2024040" target="_blank">LCA原则与框架（在线阅读）</a></li>
+            <li><span class="std-no">GB/T 24044-2008</span> <a href="https://openstd.samr.gov.cn/bzgk/std/std_list?p.p1=0&p.p2=GB%2FT%2024044" target="_blank">LCA要求与指南（在线阅读）</a></li>
+            <li><span class="std-no">GB/T 33635-2017</span> <a href="https://openstd.samr.gov.cn/bzgk/std/std_list?p.p1=0&p.p2=GB%2FT%2033635" target="_blank">绿色供应链管理导则</a></li>
+          </ul>
+        </div>
+
+        <div class="resource-cat">
+          <h3>🇨🇳 国内对应ISO标准（中文版） <span class="count">等同/修改采用</span></h3>
+          <ul>
+            <li><span class="std-no">GB/T 32150</span> <a href="https://openstd.samr.gov.cn/bzgk/std/std_list?p.p1=0&p.p2=GB%2FT%2032150" target="_blank">工业企业温室气体核算通则（对应ISO 14064-1）</a></li>
+            <li><span class="std-no">GB/T 47443</span> 温室气体核查和审定标准（采标国标·仅检索）</li>
+            <li><span class="std-no">GB/T 24067</span> <a href="https://file.51315.org.cn/site/10203/upload/bszn/upload/20251016/6389622796301278631289837.pdf" target="_blank">产品碳足迹量化要求（修改采用ISO 14067，PDF下载）</a></li>
+            <li><span class="std-no">碳中和解读</span> <a href="https://www.miit.gov.cn/jgsj/jns/nyjy/art/2026/art_57a256c21af648b08c2b7df1f093c6ae.html" target="_blank">工信部专家解读零碳工厂（对应ISO 14068-1）</a></li>
+            <li><span class="std-no">GB/T 24001</span> 环境管理体系要求（采标国标·仅检索）</li>
+          </ul>
+        </div>
+
+        <div class="resource-cat">
+          <h3>🇪🇺 欧盟法规（中文解读+英文原文PDF） <span class="count">商务部解读+EUR-Lex原文</span></h3>
+          <ul>
+            <li><span class="std-no">CBAM问答</span> <a href="http://wms.mofcom.gov.cn/cms_files/filemanager/271034535/attach/202511/a141613b8cf8439eb41ba1430a4a94c4.pdf?fileName=%E6%AC%A7%E7%9B%9FCBAM%E7%9F%A5%E8%AF%86%E9%97%AE%E7%AD%94%EF%BC%88%E7%AC%AC%E4%B8%80%E6%9C%9F%EF%BC%89.pdf" target="_blank">商务部：CBAM知识问答PDF（国内下载）</a></li>
+            <li><span class="std-no">CBAM解读</span> <a href="https://chinawto.mofcom.gov.cn/article/jsbl/dtxx/202608/20260803640319.shtml" target="_blank">CBAM正式期实施指南解读（商务部）</a></li>
+            <li><span class="std-no">CBAM原文</span> <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32023R0956" target="_blank">EU 2023/956 CBAM法规英文全文PDF（EUR-Lex）</a></li>
+            <li><span class="std-no">电池法规</span> <a href="http://chinawto.mofcom.gov.cn/article/jsbl/zszc/202309/20230903438665.shtml" target="_blank">欧盟新电池法影响和应对（商务部中文解读）</a></li>
+            <li><span class="std-no">电池法规2</span> <a href="http://chinawto.mofcom.gov.cn/article/jsbl/dtxx/202508/20250803595202.shtml" target="_blank">欧盟新电池法全面取代电池指令（深度解读）</a></li>
+            <li><span class="std-no">电池法规原文</span> <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELLAR:657e427a-43a6-11ef-865a-01aa75ed71a1" target="_blank">EU 2023/1542 电池法规英文全文PDF（EUR-Lex）</a></li>
+            <li><span class="std-no">ESPR解读</span> <a href="https://chinawto.mofcom.gov.cn/article/jsbl/zszc/202603/20260303623184.shtml" target="_blank">一文读懂ESPR和数字产品护照DPP（商务部）</a></li>
+            <li><span class="std-no">ESPR原文</span> <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32024R1781" target="_blank">EU 2024/1781 ESPR法规英文全文PDF（EUR-Lex）</a></li>
+            <li><span class="std-no">CSRD解读</span> <a href="http://chinawto.mofcom.gov.cn/article/jsbl/zcfg/202603/20260303621855.shtml" target="_blank">欧盟CSRD新规生效（中文解读）</a></li>
+            <li><span class="std-no">CSRD原文</span> <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=OJ:L:2022:044:FULL" target="_blank">EU 2022/2464 CSRD指令英文全文PDF（EUR-Lex）</a></li>
+            <li><span class="std-no">ErP指令</span> <a href="http://www.mofcom.gov.cn/ckzn/upload/erp2024.pdf" target="_blank">商务部出口商品技术指南：ErP指令（中文PDF）</a></li>
+            <li><span class="std-no">ErP原文</span> <a href="https://eur-lex.europa.eu/legal-content/EN/ALL/?uri=CELEX:32009L0125" target="_blank">ErP 2009/125/EC指令英文全文（EUR-Lex，已被ESPR取代）</a></li>
+            <li><span class="std-no">综合手册</span> <a href="http://opendata.mofcom.gov.cn/front/data/detail?id=2D17D9073849E61C18F07AC9C390D163" target="_blank">外贸企业绿色低碳发展知识手册（商务部）</a></li>
+          </ul>
+        </div>
+
+        <div class="resource-cat">
+          <h3>📊 ESG披露标准 <span class="count">含中文资源</span></h3>
+          <ul>
+            <li><span class="std-no">IFRS S1</span> <a href="https://www.casc.org.cn/2023/0628/243203.shtml" target="_blank">可持续披露一般要求（财政部会计准则委员会中文解读）</a></li>
+            <li><span class="std-no">IFRS S2</span> <a href="https://www.ifrs.org/content/dam/ifrs/supporting-implementation/ifrs-s2/s2-launch-webcast-slides-cn.pdf" target="_blank">气候相关披露（中文介绍PDF）</a></li>
+            <li><span class="std-no">TCFD</span> <a href="https://assets.bbhub.io/company/sites/60/2021/12/Implementing-the-Recommendations-of-the-Task-Force-on-Climate-related-Financial-Disclosures-TCFD-Annex-2017-Simplified-Chinese-Translation.pdf" target="_blank">气候相关财务信息披露建议（中文版PDF）</a></li>
+            <li><span class="std-no">GHG Protocol</span> <a href="https://ghgprotocol.org/sites/default/files/ghgp/standards/Chinese_small.pdf" target="_blank">企业核算标准（中文版PDF）</a></li>
+            <li><span class="std-no">GRI</span> <a href="https://www.globalreporting.org/how-to-use-the-gri-standards/gri-standards-simplified-chinese-translations/" target="_blank">GRI可持续发展报告标准（简体中文版下载）</a></li>
+          </ul>
+        </div>
+
+        <div class="resource-cat">
+          <h3>📜 国内政策文件 <span class="count">全部免费</span></h3>
+          <ul>
+            <li><span class="std-no">双碳意见</span> <a href="http://www.gov.cn/zhengce/2021-10/24/content_5644613.htm" target="_blank">碳达峰碳中和工作的意见</a></li>
+            <li><span class="std-no">碳达峰方案</span> <a href="http://www.gov.cn/zhengce/content/2021-10/26/content_5644984.htm" target="_blank">2030年前碳达峰行动方案</a></li>
+            <li><span class="std-no">碳交易办法</span> <a href="https://www.mee.gov.cn/xxgk2018/xxgk/xxgk01/202101/t20210129_819733.html" target="_blank">碳排放权交易管理办法</a></li>
+            <li><span class="std-no">环境信息披露</span> <a href="https://www.mee.gov.cn/xxgk2018/xxgk/xxgk02/202201/t20220111_966616.html" target="_blank">企业环境信息依法披露管理办法</a></li>
+            <li><span class="std-no">CBAM解读</span> <a href="https://chinawto.mofcom.gov.cn/article/jsbl/dtxx/202608/20260803640319.shtml" target="_blank">商务部CBAM正式期实施指南解读</a></li>
+          </ul>
+        </div>
+
+        <div class="resource-cat">
+          <h3>🌐 标准检索入口 <span class="count">全部国内平台</span></h3>
+          <ul>
+            <li><span class="std-no">推荐入口</span> <a href="https://openstd.samr.gov.cn/" target="_blank">国家标准全文公开系统（首选）</a></li>
+            <li><span class="std-no">信息查询</span> <a href="https://std.samr.gov.cn/" target="_blank">全国标准信息公共服务平台</a></li>
+            <li><span class="std-no">团体标准</span> <a href="https://www.ttbz.org.cn/" target="_blank">全国团体标准信息平台</a></li>
+            <li><span class="std-no">行业标准</span> <a href="https://hbba.sacinfo.org.cn/" target="_blank">行业标准信息服务平台</a></li>
+            <li><span class="std-no">WTO咨询</span> <a href="https://chinawto.mofcom.gov.cn/" target="_blank">商务部中国世贸组织网（欧盟法规解读）</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 专业书籍推荐 -->
+  <div id="tab-books" class="tab-content">
+    <div class="bili-section">
+      <h2>📚 专业书籍推荐（绿色贸易与低碳方向）</h2>
+      <p style="font-size:13px;color:#64748b;margin-bottom:20px;">
+        💡 精选<strong>理论+法规+实操</strong>兼顾的权威专业书籍，按"基础理论→核心方法→法规专题→ESG披露"分级推荐，适合系统学习和深度研究。
+      </p>
+
+      <h3 style="font-size:15px;color:#1e3a5f;margin-bottom:14px;padding-left:4px;">📘 基础理论类</h3>
+      <div class="book-grid">
+        <div class="book-card">
+          <div class="book-title">《低碳经济学》</div>
+          <div class="book-author">张坤民 等 / 中国环境科学出版社</div>
+          <div class="book-desc">低碳经济理论奠基之作，系统覆盖碳排放核算、碳市场机制、碳关税、低碳发展路径等核心议题，建立知识体系的首选入门读物。</div>
+        </div>
+        <div class="book-card">
+          <div class="book-title">《碳关税理论机制及对中国的影响》</div>
+          <div class="book-author">田明华 等 / 中国林业出版社</div>
+          <div class="book-desc">系统阐述碳关税的理论基础、机制设计及对中国出口贸易的影响，CBAM碳边境调节机制研究必读参考。</div>
+        </div>
+        <div class="book-card">
+          <div class="book-title">《绿色贸易壁垒法律问题及其对策研究》</div>
+          <div class="book-author">周珂 等 / 中国人民大学出版社</div>
+          <div class="book-desc">从法律视角分析绿色贸易壁垒的WTO规则、国际法依据及我国应对策略，法理层面深度理解。</div>
+        </div>
+        <div class="book-card">
+          <div class="book-title">《面向"双碳"目标的中国国际经济循环》</div>
+          <div class="book-author">陈曦 / 中国商务出版社</div>
+          <div class="book-desc">ISBN 978-7-5103-3989-9，结合双碳目标分析中国对外贸易格局与绿色转型路径，商务系统推荐读物。</div>
+        </div>
+      </div>
+
+      <h3 style="font-size:15px;color:#1e3a5f;margin:24px 0 14px;padding-left:4px;">📗 核心方法类</h3>
+      <div class="book-grid">
+        <div class="book-card">
+          <div class="book-title">《产品碳足迹核算与评价》</div>
+          <div class="book-author">张乐 / 机械工业出版社</div>
+          <div class="book-desc">ISBN 978-7-111-775119-0，系统讲解ISO 14067标准、LCA方法学、碳足迹数据库及软件工具应用，含丰富案例分析。</div>
+        </div>
+        <div class="book-card">
+          <div class="book-title">《能源碳足迹》</div>
+          <div class="book-author">高等教育出版社</div>
+          <div class="book-desc">综合性教材，覆盖国家、城市、组织、产品等不同尺度的碳足迹核算工具与实践，体系完整，方法严谨。</div>
+        </div>
+        <div class="book-card">
+          <div class="book-title">《碳核算：理论、方法与实例》</div>
+          <div class="book-author">刘涛 / 国家开放大学出版社</div>
+          <div class="book-desc">ISBN 978-7-3041-4032-8，2026年最新出版，理论讲解与实操实例并重，企业碳核算实用工具书。</div>
+        </div>
+        <div class="book-card">
+          <div class="book-title">《生命周期评价（LCA）方法与应用》</div>
+          <div class="book-author">高校教材</div>
+          <div class="book-desc">基于ISO 14040/44标准，系统讲解LCA方法论框架、数据质量控制、影响评价方法，碳足迹核算的理论基础。</div>
+        </div>
+      </div>
+
+      <h3 style="font-size:15px;color:#1e3a5f;margin:24px 0 14px;padding-left:4px;">📕 法规专题类</h3>
+      <div class="book-grid">
+        <div class="book-card">
+          <div class="book-title">《欧盟绿色贸易壁垒与中国企业应对》</div>
+          <div class="book-author">商务部研究院相关研究</div>
+          <div class="book-desc">聚焦CBAM、电池法规、CSRD、ESPR等欧盟绿色新规，系统分析对出口企业的影响及应对策略。</div>
+        </div>
+        <div class="book-card">
+          <div class="book-title">《碳关税对中国工业品出口贸易影响效应研究》</div>
+          <div class="book-author">周长荣 / 中国社会科学出版社</div>
+          <div class="book-desc">获河北省社科优秀成果奖，实证研究碳关税对中国工业品出口的影响效应，数据详实，分析深入。</div>
+        </div>
+        <div class="book-card">
+          <div class="book-title">《中国出口欧盟技术性贸易措施应对策略》</div>
+          <div class="book-author">贸促会研究报告</div>
+          <div class="book-desc">以新能源汽车为例，系统梳理欧盟海关监管及绿色技术性贸易措施，企业应对实操性强。</div>
+        </div>
+        <div class="book-card">
+          <div class="book-title">《外贸企业绿色低碳发展知识手册》</div>
+          <div class="book-author">商务部 / <a href="http://opendata.mofcom.gov.cn/front/data/detail?id=2D17D9073849E61C18F07AC9C390D163" target="_blank">PDF免费下载</a></div>
+          <div class="book-desc">商务部官方发布，CBAM、电池法规、CSRD、ESPR等全覆盖，企业绿色合规实操指南。</div>
+        </div>
+      </div>
+
+      <h3 style="font-size:15px;color:#1e3a5f;margin:24px 0 14px;padding-left:4px;">📓 ESG与披露类</h3>
+      <div class="book-grid">
+        <div class="book-card">
+          <div class="book-title">《ESG理论与实践》</div>
+          <div class="book-author">高校教材</div>
+          <div class="book-desc">系统介绍ESG的概念框架、披露标准（GRI/TCFD/IFRS）、评估方法及企业最佳实践。</div>
+        </div>
+        <div class="book-card">
+          <div class="book-title">《企业碳管理与碳资产运营》</div>
+          <div class="book-author">专业培训教材</div>
+          <div class="book-desc">覆盖碳盘查、碳核查、碳资产管理、碳交易等全链条，企业碳管理实操手册。</div>
+        </div>
+        <div class="book-card">
+          <div class="book-title">《可持续发展报告标准 GRI 解读》</div>
+          <div class="book-author">GRI官方培训材料</div>
+          <div class="book-desc">全球最通用的ESG报告标准解读，企业编制可持续发展报告的核心参考资料。</div>
+        </div>
+      </div>
+
+      <div style="margin-top:24px;padding:16px 20px;background:#f0fff4;border-radius:10px;border-left:4px solid #48bb78;">
+        <div style="font-size:14px;font-weight:600;color:#22543d;margin-bottom:8px;">💡 阅读进阶路径</div>
+        <div style="font-size:12px;color:#276749;line-height:1.8;">
+          <strong>第一步·基础理论：</strong>《低碳经济学》+ 商务部绿色低碳知识手册<br>
+          <strong>第二步·方法核心：</strong>《产品碳足迹核算与评价》+《碳关税理论机制》<br>
+          <strong>第三步·法规专题：</strong>欧盟绿色贸易壁垒研究 + CBAM/ESPR官方解读<br>
+          <strong>第四步·实务深化：</strong>标准原文精读 + 企业案例研究 + ESG报告编制
+        </div>
+        <div style="font-size:11px;color:#2f855a;margin-top:8px;">购买渠道：当当网、京东图书、各高校出版社官网</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 权威解读 -->
+  <div id="tab-official" class="tab-content">
+    <div class="bili-section">
+      <h2>🏛️ 官方权威解读（中文·免费阅读）</h2>
+      <p style="font-size:13px;color:#64748b;margin-bottom:20px;">
+        💡 全部来自<strong>商务部、生态环境部、工信部、海关总署</strong>等官方渠道，中文深度解读，权威性强，适合研究和汇报参考。
+      </p>
+
+      <div class="resource-categories">
+
+        <div class="resource-cat">
+          <h3>🇨🇳 生态环境部 <span class="count">双碳政策</span></h3>
+          <ul>
+            <li><span class="std-no">双碳政策</span> <a href="https://www.mee.gov.cn/ywgz/ydqhbh/ydqhzs/202312/t20231218_1056742.shtml" target="_blank">应对气候变化知识手册/政策解读系列</a></li>
+            <li><span class="std-no">碳交易</span> <a href="https://www.mee.gov.cn/xxgk2018/xxgk/xxgk01/202101/t20210129_819733.html" target="_blank">碳排放权交易管理办法（试行）</a></li>
+            <li><span class="std-no">信息披露</span> <a href="https://www.mee.gov.cn/xxgk2018/xxgk/xxgk02/202201/t20220111_966616.html" target="_blank">企业环境信息依法披露管理办法</a></li>
+            <li><span class="std-no">核算指南</span> <a href="https://www.mee.gov.cn/xxgk2018/xxgk/xxgk06/202203/t20220315_971770.html" target="_blank">企业温室气体排放核算方法与报告指南</a></li>
+          </ul>
+        </div>
+
+        <div class="resource-cat">
+          <h3>🏛️ 商务部WTO咨询 <span class="count">欧盟法规专题</span></h3>
+          <ul>
+            <li><span class="std-no">CBAM 1</span> <a href="https://chinawto.mofcom.gov.cn/article/jsbl/dtxx/202608/20260803640319.shtml" target="_blank">CBAM正式期实施指南解读（一）</a></li>
+            <li><span class="std-no">CBAM 2</span> <a href="https://chinawto.mofcom.gov.cn/article/jsbl/zszc/202310/20231003461435.shtml" target="_blank">欧盟碳边境调节机制（CBAM）综述</a></li>
+            <li><span class="std-no">CBAM 3</span> <a href="https://chinawto.mofcom.gov.cn/article/jsbl/zszc/202607/20260703636125.shtml" target="_blank">欧盟发布CBAM新规草案：证书购买回购机制</a></li>
+            <li><span class="std-no">电池法规</span> <a href="http://chinawto.mofcom.gov.cn/article/jsbl/zszc/202309/20230903438665.shtml" target="_blank">欧盟新电池法影响和应对</a></li>
+            <li><span class="std-no">电池法规2</span> <a href="http://chinawto.mofcom.gov.cn/article/jsbl/dtxx/202508/20250803595202.shtml" target="_blank">欧盟新电池法全面取代电池指令</a></li>
+          </ul>
+        </div>
+
+        <div class="resource-cat">
+          <h3>🏛️ 商务部ESPR专题 <span class="count">可持续产品法规</span></h3>
+          <ul>
+            <li><span class="std-no">ESPR 1</span> <a href="https://chinawto.mofcom.gov.cn/article/jsbl/zszc/202603/20260303623184.shtml" target="_blank">一文读懂ESPR和数字产品护照DPP</a></li>
+            <li><span class="std-no">ESPR 2</span> <a href="https://chinawto.mofcom.gov.cn/article/jsbl/zszc/202509/20250903600686.shtml" target="_blank">ESPR深度解读—管控范围近乎覆盖全品类</a></li>
+            <li><span class="std-no">ESPR 3</span> <a href="https://chinawto.mofcom.gov.cn/article/jsbl/zcfg/202603/20260303620473.shtml" target="_blank">ESPR产品禁毁豁免授权法规解读</a></li>
+            <li><span class="std-no">ErP</span> <a href="http://www.mofcom.gov.cn/ckzn/upload/erp2024.pdf" target="_blank">出口商品技术指南：ErP生态设计指令（PDF）</a></li>
+            <li><span class="std-no">CSRD</span> <a href="http://chinawto.mofcom.gov.cn/article/jsbl/zcfg/202603/20260303621855.shtml" target="_blank">欧盟CSRD新规生效（中文解读）</a></li>
+          </ul>
+        </div>
+
+        <div class="resource-cat">
+          <h3>🏭 工信部 <span class="count">工业绿色发展</span></h3>
+          <ul>
+            <li><span class="std-no">零碳工厂</span> <a href="https://www.miit.gov.cn/jgsj/jns/nyjy/art/2026/art_57a256c21af648b08c2b7df1f093c6ae.html" target="_blank">零碳工厂建设与碳中和标准专家解读</a></li>
+            <li><span class="std-no">绿色制造</span> <a href="https://www.miit.gov.cn/jgsj/jns/lsgy/art/2024/art_5b0c7d2e2c5b4b0b9c2a2c2a7d9c2f9d.html" target="_blank">绿色制造体系建设实施方案</a></li>
+            <li><span class="std-no">工业碳达峰</span> <a href="https://www.miit.gov.cn/jgsj/jns/nyjy/art/2022/art_5d7a8c8e2c5b4b0b9c2a2c2a7d9c2f9d.html" target="_blank">工业领域碳达峰实施方案解读</a></li>
+          </ul>
+        </div>
+
+        <div class="resource-cat">
+          <h3>🛃 海关总署 <span class="count">口岸监管</span></h3>
+          <ul>
+            <li><span class="std-no">绿色门槛</span> <a href="http://www.customs.gov.cn/customs/2026-07/01/article_2026070116393642973.html" target="_blank">海关助力"中国制造"跨越"绿色门槛"</a></li>
+            <li><span class="std-no">政策解读</span> <a href="http://www.customs.gov.cn/customs/302249/302266/302267/index.html" target="_blank">海关总署政策解读专栏</a></li>
+            <li><span class="std-no">技术性贸易</span> <a href="http://www.customs.gov.cn/customs/302249/302266/302270/index.html" target="_blank">进出口食品安全与技术性贸易措施</a></li>
+          </ul>
+        </div>
+
+        <div class="resource-cat">
+          <h3>📑 官方手册报告 <span class="count">PDF下载</span></h3>
+          <ul>
+            <li><span class="std-no">知识手册</span> <a href="http://opendata.mofcom.gov.cn/front/data/detail?id=2D17D9073849E61C18F07AC9C390D163" target="_blank">外贸企业绿色低碳发展知识手册（商务部）</a></li>
+            <li><span class="std-no">CBAM问答</span> <a href="http://wms.mofcom.gov.cn/cms_files/filemanager/271034535/attach/202511/a141613b8cf8439eb41ba1430a4a94c4.pdf?fileName=%E6%AC%A7%E7%9B%9FCBAM%E7%9F%A5%E8%AF%86%E9%97%AE%E7%AD%94%EF%BC%88%E7%AC%AC%E4%B8%80%E6%9C%9F%EF%BC%89.pdf" target="_blank">欧盟CBAM知识问答PDF（商务部）</a></li>
+            <li><span class="std-no">ErP指南</span> <a href="http://www.mofcom.gov.cn/ckzn/upload/erp2024.pdf" target="_blank">出口商品技术指南：ErP指令（商务部PDF）</a></li>
+            <li><span class="std-no">双碳意见</span> <a href="http://www.gov.cn/zhengce/2021-10/24/content_5644613.htm" target="_blank">关于完整准确全面贯彻新发展理念做好碳达峰碳中和工作的意见</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- 知识框架 -->
+  <div id="tab-framework" class="tab-content">
+    <div class="framework">
+      <h2>🧩 低碳与绿色贸易知识框架（4层递进）</h2>
+
+      <div class="framework-layer layer-1">
+        <div class="layer-title">L1 基础概念层 — 科学与政策背景（第1-2周学）</div>
+        <div class="layer-items">
+          <span class="layer-item">气候变化科学</span>
+          <span class="layer-item">温室气体种类</span>
+          <span class="layer-item">IPCC报告体系</span>
+          <span class="layer-item">UNFCCC公约</span>
+          <span class="layer-item">京都议定书</span>
+          <span class="layer-item core">巴黎协定</span>
+          <span class="layer-item">中国双碳目标</span>
+          <span class="layer-item">1+N政策体系</span>
+          <span class="layer-item">绿色贸易概念</span>
+          <span class="layer-item">碳市场原理</span>
+        </div>
+      </div>
+
+      <div class="framework-layer layer-2">
+        <div class="layer-title">L2 方法标准层 — 碳核算核心方法学（第3-5周学）</div>
+        <div class="layer-items">
+          <span class="layer-item core">ISO 14064-1 组织碳核算</span>
+          <span class="layer-item core">GB/T 32150 核算通则</span>
+          <span class="layer-item">GB/T 32151 分行业核算</span>
+          <span class="layer-item core">ISO 14064-2 项目减排</span>
+          <span class="layer-item core">ISO 14067 产品碳足迹</span>
+          <span class="layer-item core">GB/T 24067 产品碳足迹</span>
+          <span class="layer-item">ISO 14040/44 LCA</span>
+          <span class="layer-item">GB/T 24040/44 LCA国标</span>
+          <span class="layer-item">ISO 14064-3 核查</span>
+          <span class="layer-item">GHG Protocol</span>
+          <span class="layer-item">排放因子法</span>
+          <span class="layer-item">范围1/2/3</span>
+        </div>
+      </div>
+
+      <div class="framework-layer layer-3">
+        <div class="layer-title">L3 管理体系层 — 体系与认证（第6周学）</div>
+        <div class="layer-items">
+          <span class="layer-item core">GB/T 46566 碳管理体系</span>
+          <span class="layer-item">ISO 14001 环境管理体系</span>
+          <span class="layer-item core">ISO 14068-1 碳中和认证</span>
+          <span class="layer-item">DB4403/T 617 深圳碳中和</span>
+          <span class="layer-item">ISO 50001 能源管理</span>
+          <span class="layer-item">碳达峰方案编制</span>
+          <span class="layer-item">碳盘查与核查</span>
+          <span class="layer-item">内审与管理评审</span>
+          <span class="layer-item">PDCA循环</span>
+        </div>
+      </div>
+
+      <div class="framework-layer layer-4">
+        <div class="layer-title">L4 绿色贸易层 — 国际合规与市场（第7-9周学）</div>
+        <div class="layer-items">
+          <span class="layer-item core">EU 2023/1542 电池法规</span>
+          <span class="layer-item core">CBAM 碳边境调节机制</span>
+          <span class="layer-item core">EU 2024/1781 ESPR</span>
+          <span class="layer-item core">数字产品护照 DPP</span>
+          <span class="layer-item">EU ETS 欧盟碳市场</span>
+          <span class="layer-item">CSRD/ESRS 可持续披露</span>
+          <span class="layer-item">ISSB IFRS S1/S2</span>
+          <span class="layer-item">GRI 报告标准</span>
+          <span class="layer-item">TCFD 气候披露</span>
+          <span class="layer-item">REACH 化学品法规</span>
+          <span class="layer-item">RoHS 有害物质限制</span>
+          <span class="layer-item">ErP/ESPR 生态设计</span>
+          <span class="layer-item">电池护照</span>
+          <span class="layer-item">绿色供应链</span>
+          <span class="layer-item">SBTi 科学碳目标</span>
+          <span class="layer-item">全国碳市场</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      💡 <strong>学习路径建议：</strong>从L1到L4逐层递进，每层先掌握核心标准（红色加粗的），再扩展其他。
+      对企业绿色合规来说，L2（碳核算方法）和L3（管理体系）是内功，L4（绿色贸易）是出口企业的硬需求。
+      注意：ESPR（2024/1781）已取代ErP指令，管控范围从能源产品扩大到几乎所有实体产品，新增数字产品护照(DPP)要求。
+    </div>
+  </div>
+
+  <!-- 获取指南 -->
+  <div id="tab-guide" class="tab-content">
+    <div class="guide-grid">
+
+      <div class="guide-card">
+        <h4>🇨🇳 国家标准全文公开系统</h4>
+        <div class="source"><a href="https://openstd.samr.gov.cn/" target="_blank">openstd.samr.gov.cn</a></div>
+        <span class="free-tag">✅ 大部分免费</span>
+        <p>国家市监总局官方平台，找国标首选！强制性国标可下载PDF，推荐性国标可在线阅读。直接搜标准号如"GB/T 24067"。</p>
+      </div>
+
+      <div class="guide-card">
+        <h4>🇨🇳 全国标准信息公共服务平台</h4>
+        <div class="source"><a href="https://std.samr.gov.cn/" target="_blank">std.samr.gov.cn</a></div>
+        <span class="free-tag">✅ 完全免费</span>
+        <p>查询所有国标、行标、团标的基本信息、采标关系、实施状态。想知道某个ISO标准对应哪个国内标准，来这里查。</p>
+      </div>
+
+      <div class="guide-card">
+        <h4>🏛️ 商务部中国世贸组织网</h4>
+        <div class="source"><a href="https://chinawto.mofcom.gov.cn/" target="_blank">chinawto.mofcom.gov.cn</a></div>
+        <span class="free-tag">✅ 完全免费</span>
+        <p>国内最权威的欧盟法规中文解读平台！CBAM、电池法规、CSRD、ErP等欧盟绿色贸易壁垒的官方解读、应对指南、最新动态全部都有。</p>
+      </div>
+
+      <div class="guide-card">
+        <h4>🏢 GHG Protocol（中文版）</h4>
+        <div class="source"><a href="https://ghgprotocol.org/sites/default/files/ghgp/standards/Chinese_small.pdf" target="_blank">ghgprotocol.org（中文版PDF）</a></div>
+        <span class="free-tag">✅ 完全免费下载</span>
+        <p>企业碳核算标准中文版PDF免费下载。碳核算入门必读，通俗易懂。</p>
+      </div>
+
+      <div class="guide-card">
+        <h4>📊 财政部会计准则委员会（ISSB中文解读）</h4>
+        <div class="source"><a href="https://www.casc.org.cn/" target="_blank">casc.org.cn</a></div>
+        <span class="free-tag">✅ 完全免费</span>
+        <p>国内官方对IFRS S1/S2等国际可持续披露准则的中文解读和动态跟踪。ESG披露学习首选国内渠道。</p>
+      </div>
+
+      <div class="guide-card">
+        <h4>🏛️ 中国政府网</h4>
+        <div class="source"><a href="http://www.gov.cn/" target="_blank">gov.cn</a></div>
+        <span class="free-tag">✅ 完全免费</span>
+        <p>国务院政策文件的官方发布渠道。双碳顶层设计文件都在这里，搜政策名称即可。</p>
+      </div>
+
+      <div class="guide-card">
+        <h4>🌱 生态环境部双碳专栏</h4>
+        <div class="source"><a href="https://www.mee.gov.cn/ywgz/ydqhbh/" target="_blank">mee.gov.cn/ywgz/ydqhbh</a></div>
+        <span class="free-tag">✅ 完全免费</span>
+        <p>生态环境部应对气候变化司官方专栏，政策更新、地方动态、工作进展一手信息。</p>
+      </div>
+
+      <div class="guide-card">
+        <h4>🎓 国家高等教育智慧教育平台</h4>
+        <div class="source"><a href="https://higher.smartedu.cn/" target="_blank">higher.smartedu.cn</a></div>
+        <span class="free-tag">✅ 完全免费</span>
+        <p>教育部官方平台，汇聚全国高校优质课程，含清华大学碳中和等课程，全部免费学习。</p>
+      </div>
+
+      <div class="guide-card">
+        <h4>🎓 中国大学MOOC</h4>
+        <div class="source"><a href="https://www.icourse163.org/" target="_blank">icourse163.org</a></div>
+        <span class="free-tag">✅ 大部分免费</span>
+        <p>西北大学《碳资产管理与核算》、四川大学《生命周期评价与应用》、北理工《能源与碳中和系统工程》、首经贸《企业ESG管理》等系统课程，免费学习。</p>
+      </div>
+
+      <div class="guide-card">
+        <h4>🎓 学堂在线</h4>
+        <div class="source"><a href="https://www.xuetangx.com/" target="_blank">xuetangx.com</a></div>
+        <span class="free-tag">✅ 免费学习</span>
+        <p>清华大学碳中和相关课程，如《碳中和技术概论》《绿色建筑与可持续发展》《绿色创新理论与实践》等。</p>
+      </div>
+
+      <div class="guide-card">
+        <h4>💡 找国标中文版小技巧</h4>
+        <div class="source">ISO标准 → 先找对应GB/T</div>
+        <span class="free-tag">✅ 省钱技巧</span>
+        <p>很多ISO标准有对应的国标版。如：ISO 14067→GB/T 24067；ISO 14001→GB/T 24001。先去国标系统搜中文版！</p>
+      </div>
+
+      <div class="guide-card">
+        <h4>📑 标准解读视频</h4>
+        <div class="source">全国标准信息公共服务平台</div>
+        <span class="free-tag">✅ 部分免费</span>
+        <p>部分标准页面下有配套的"标准解读视频课程"链接，如GB/T 24067就有官方解读视频。</p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+function switchTab(tabName, btn) {
+  document.querySelectorAll('.tab-content').forEach(function(el) {
+    el.classList.remove('active');
+  });
+  document.querySelectorAll('.tab-btn').forEach(function(el) {
+    el.classList.remove('active');
+  });
+  document.getElementById('tab-' + tabName).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+
+</body>
+</html>
